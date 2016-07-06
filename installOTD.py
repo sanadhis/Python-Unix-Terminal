@@ -1,12 +1,10 @@
-import getpass
-import os
+from configModule import getOraclePath,sendOsCommand
 
 updateChoice = ('true','false')
 otdType = ('\"Collocated OTD (Managed through WebLogic server)\"','\"Standalone OTD (Managed independently of WebLogic server)\"')
 
 def configuration():
-    user = getpass.getuser()
-    path = '/home/'+user+'/Oracle'
+    path = getOraclePath()
     while(True):
         try:
             securityUpdate = raw_input('Decline Security Update? (y/n): ').lower()
@@ -32,6 +30,6 @@ def installation(configOption):
     updateOption = configOption[1]
     otdOption = configOption[2]
     installCommand = "./otd_linux64.bin -silent ORACLE_HOME=" + path + " DECLINE_SECURITY_UPDATES="+ updateOption +" INSTALL_TYPE=" + otdOption 
-    os.system(installCommand)
+    sendOsCommand(installCommand)
 
 installation(configuration())
