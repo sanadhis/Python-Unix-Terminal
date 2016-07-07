@@ -19,7 +19,7 @@ REQUIREMENTS
 
 Usage
 ------------
-Perform $python <filename.py>
+Perform $python #filename.py#
 
 ## History
 
