@@ -6,13 +6,16 @@ def getOraclePath():
     path = '/home/'+user+'/Oracle'
     return path
 
-def sendOsCommand(command):
-    os.system(command)    
-
 def getDomainPath(domainName):
     baseOraclePath = getOraclePath()
     domainPath = baseOraclePath + '/user_projects/domains/' + domainName
     return domainPath
+
+def setDomainName():
+    domainName = raw_input('Enter domain name: ') 
+
+def sendOsCommand(command):
+    os.system(command)    
 
 def sendWLSTCommand(filename):
     baseOraclePath = getOraclePath()
