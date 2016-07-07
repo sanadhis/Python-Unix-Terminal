@@ -1,17 +1,16 @@
-from configModule import getOraclePath,sendOsCommand
+from otdModule import buildInstallCommand,getOraclePath,sendOsCommand
 
 updateChoice = ('true','false')
 otdType = ('\"Collocated OTD (Managed through WebLogic server)\"','\"Standalone OTD (Managed independently of WebLogic server)\"')
 
 def configuration():
-    path = getOraclePath()
     while(True):
         try:
             securityUpdate = raw_input('Decline Security Update? (y/n): ').lower()
             installType = raw_input('Install Type? (Collocated(C)/Stand Alone(S)): ').lower()
         except:
             print('Null Input')
-        if((securityUpdate=='y' or securityUpdate.lower()=='n') and (installType=='c' or installType.lower()=='s')):
+        if((securityUpdate=='y' or securityUpdate=='n') and (installType=='c' or installType=='s')):
             break
         else:
             print('Wrong Input/Command')
@@ -23,13 +22,13 @@ def configuration():
         installType = otdType[0]
     else:
         installType = otdType[1]
-    return path, securityUpdate, installType
+    return securityUpdate, installType
 
-def installation(configOption):
-    path = configOption[0]
-    updateOption = configOption[1]
-    otdOption = configOption[2]
-    installCommand = "./otd_linux64.bin -silent ORACLE_HOME=" + path + " DECLINE_SECURITY_UPDATES="+ updateOption +" INSTALL_TYPE=" + otdOption 
-    sendOsCommand(installCommand)
+def install(configOption):
+    updateOption = configOption[0]
+    otdOption = configOption[1]
+    installCommand = buildInstallCommand(updateOption,otdOption)
+    print(installCommand)
+    #sendOsCommand(installCommand)
 
-installation(configuration())
+install(configuration())

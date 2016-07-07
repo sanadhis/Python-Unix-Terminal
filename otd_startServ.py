@@ -1,7 +1,5 @@
-from configModule import getDomainPath,sendWLSTCommand
+from otdModule import selectDomain,getWebLogicServerPath,execProgram
 
-domainName = 'base_domain'
-
-def setConfiguration():
-    global domainName, configurationName, listenerPort, serverName, originServer
-    domainName = raw_input('Enter domain name: ')
+domainPath = selectDomain()
+otdServPath = getWebLogicServerPath(domainPath)
+execProgram(otdServPath)

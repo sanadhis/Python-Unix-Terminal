@@ -25,7 +25,8 @@ def createConfiguration():
     file.write("updateDomain()\n")
     file.write("closeDomain()\n")
     file.close()
-    sendWLSTCommand('wlstScript.py')
+    wlstPath = getPath('/oracle_common/common/bin/wlst.sh ' + 'otd_wlstScript.py')
+    execProgram(wlstPath)
 
 setConfiguration()
 createConfiguration()
