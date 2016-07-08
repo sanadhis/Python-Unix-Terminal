@@ -28,7 +28,6 @@ def install(configOption):
     updateOption = configOption[0]
     otdOption = configOption[1]
     installCommand = buildInstallCommand(updateOption,otdOption)
-    print(installCommand)
-    #sendOsCommand(installCommand)
+    sendOsCommand(installCommand)
 
 install(configuration())

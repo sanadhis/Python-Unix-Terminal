@@ -1,4 +1,4 @@
-from otdModule import getDomainPath,writeCreateDomainScript,execWLSTCommand
+from otdModule import writeCreateDomainScript,execWLSTCommand
 
 domainName = 'base_domain'
 username = 'weblogic'

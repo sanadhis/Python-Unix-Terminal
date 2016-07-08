@@ -1,8 +1,10 @@
+securityUpdate n
+type c
 username weblogic
 password otd123otd
 domain otd_domain
 configuration defaultConfiguration
 listener 20008
 server localhost
-origin localhost:80 localhost:3000 localhost 3001
+origin localhost:81,localhost:3000,localhost:3001,localhost:8080,localhost:9080
 machine machine1

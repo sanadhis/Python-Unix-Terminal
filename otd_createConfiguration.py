@@ -1,4 +1,4 @@
-from otdModule import getDomainPath,writeConfigurationScript,execWLSTCommand
+from otdModule import writeConfigurationScript,execWLSTCommand
 
 domainName = 'base_domain'
 configurationName = 'defaultConfig'

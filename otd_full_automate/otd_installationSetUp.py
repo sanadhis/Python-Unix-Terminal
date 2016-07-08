@@ -1,19 +1,12 @@
-from otdModule import buildInstallCommand,getOraclePath,sendOsCommand
+from otdModule import buildInstallCommand,sendOsCommand,readConfiguration
 
 updateChoice = ('true','false')
 otdType = ('\"Collocated OTD (Managed through WebLogic server)\"','\"Standalone OTD (Managed independently of WebLogic server)\"')
 
 def configuration():
-    while(True):
-        try:
-            securityUpdate = raw_input('Decline Security Update? (y/n): ').lower()
-            installType = raw_input('Install Type? (Collocated(C)/Stand Alone(S)): ').lower()
-        except:
-            print('Null Input')
-        if((securityUpdate=='y' or securityUpdate=='n') and (installType=='c' or installType=='s')):
-            break
-        else:
-            print('Wrong Input/Command')
+    savedConfiguration = readConfiguration()
+    securityUpdate = savedConfiguration['securityUpdate']
+    installType = savedConfiguration['type']
     if securityUpdate == 'y':
         securityUpdate = updateChoice[0]
     else:
@@ -28,7 +21,6 @@ def install(configOption):
     updateOption = configOption[0]
     otdOption = configOption[1]
     installCommand = buildInstallCommand(updateOption,otdOption)
-    print(installCommand)
-    #sendOsCommand(installCommand)
+    sendOsCommand(installCommand)
 
 install(configuration())

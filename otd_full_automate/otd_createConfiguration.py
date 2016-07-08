@@ -1,4 +1,4 @@
-from otdModule import getDomainPath,writeConfigurationScript,execWLSTCommand
+from otdModule import readConfiguration,writeConfigurationScript,execWLSTCommand
 
 domainName = 'base_domain'
 configurationName = 'defaultConfig'
@@ -9,11 +9,12 @@ scriptFile = "otd_wlstScript.py"
 
 def setConfiguration():
     global domainName, configurationName, listenerPort, serverName, originServer
-    domainName = raw_input('Enter domain name: ')
-    configurationName = raw_input('Enter Configuration name: ')
-    listenerPort = raw_input("Enter OTD's instances port: ")
-    serverName = raw_input("Enter OTD's server name: ")
-    originServer = raw_input("Enter the back-end's Server: ")
+    savedConfiguration = readConfiguration()
+    domainName = savedConfiguration['domain']
+    configurationName = savedConfiguration['configuration']
+    listenerPort = savedConfiguration['listener']
+    serverName = savedConfiguration['server']
+    originServer = savedConfiguration['origin']
 
 def createConfiguration():
     writeConfigurationScript(domainName,configurationName,listenerPort,serverName,originServer,scriptFile)

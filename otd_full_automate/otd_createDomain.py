@@ -1,4 +1,4 @@
-from otdModule import getDomainPath,writeCreateDomainScript,execWLSTCommand
+from otdModule import readConfiguration,writeCreateDomainScript,execWLSTCommand
 
 domainName = 'base_domain'
 username = 'weblogic'
@@ -7,9 +7,10 @@ scriptFile = "otd_wlstScript.py"
 
 def setDomain():
     global domainName, configurationName, listenerPort, serverName, originServer
-    domainName = raw_input('Enter the name of Domain you want to create: ')
-    username = raw_input('Enter domain\'s admin username: ')
-    password = raw_input("Enter domain's admin password: ")
+    savedConfiguration = readConfiguration()
+    domainName = savedConfiguration['domain']
+    username = savedConfiguration['username']
+    password = savedConfiguration['password']
 
 def createDomain():
     writeCreateDomainScript(domainName,username,password)

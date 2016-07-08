@@ -1,4 +1,4 @@
-from otdModule import getDomainPath,writeInstanceScript,execWLSTCommand,startOTD
+from otdModule import readConfiguration,writeInstanceScript,execWLSTCommand,startOTD
 
 domainName = 'base_domain'
 configurationName = 'defaultConfig'
@@ -7,9 +7,10 @@ scriptFile = "otd_wlstScript.py"
 
 def setInstance():
     global domainName, configurationName, machineName
-    domainName = raw_input('Enter domain name: ')
-    configurationName = raw_input('Enter Configuration name: ')
-    machineName = raw_input("Enter target's machine: ")
+    savedConfiguration = readConfiguration()
+    domainName = savedConfiguration['domain']
+    configurationName = savedConfiguration['configuration']
+    machineName = savedConfiguration['machine']
 
 def createInstance():
     writeInstanceScript(domainName,configurationName,machineName,scriptFile)

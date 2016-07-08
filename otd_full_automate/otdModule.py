@@ -49,7 +49,7 @@ def pathExists(domainPath):
     else:
         sys.exit("Domain Path Doesn't Exist!")
 
-def readConfiguration()
+def readConfiguration():
     configuration = {}
     file = open('otdConfiguration.txt','r')
     for line in file:
