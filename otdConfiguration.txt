@@ -1,0 +1,8 @@
+username weblogic
+password otd123otd
+domain otd_domain
+configuration defaultConfiguration
+listener 20008
+server localhost
+origin localhost:80 localhost:3000 localhost 3001
+machine machine1
