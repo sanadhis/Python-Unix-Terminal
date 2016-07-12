@@ -49,6 +49,9 @@ def pathExists(domainPath):
     else:
         sys.exit("Domain Path Doesn't Exist!")
 
+def printFlag(message):
+    print("\n================= "+message+" =================\n")
+
 def readConfiguration():
     configuration = {}
     file = open('otdConfiguration.txt','r')
@@ -99,6 +102,20 @@ def writeCreateDomainScript(domainName,username,password):
     domainPath = getDomainPath(domainName)
     props = [templatePath,domainPath,username,password]
     scriptText = "createDomain('" + "','".join(props) + "')"
+    writeWLSTScript(scriptText,'otd_wlstScript.py')
+
+def writeCreateMachineScript(serverUser,serverPass,serverAdmURL,machineName,machineAddress,machinePort):
+    props = [serverUser,serverPass,serverAdmURL]
+    scriptText = "connect('"+"','".join(props)+"')\n"
+    scriptText += "edit()\n"
+    scriptText += "startEdit()\n"
+    scriptText += "create('"+machineName+"','Machine')\n"
+    scriptText += "cd('Machines/"+machineName+"/NodeManager/"+machineName+"')\n"
+    scriptText += "set('ListenAddress','"+machineAddress+"')\n"
+    scriptText += "set('ListenPort','"+machinePort+"')\n"
+    scriptText += "save()\n"
+    scriptText += "stopEdit('y')\n"
+    scriptText += "exit('y')\n"
     writeWLSTScript(scriptText,'otd_wlstScript.py')
 
 def writeInstanceScript(domainName,configurationName,machineName,scriptFile):

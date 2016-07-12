@@ -1,4 +1,4 @@
-from otdModule import readConfiguration,writeInstanceScript,execWLSTCommand,startOTD
+from otdModule import readConfiguration,writeInstanceScript,execWLSTCommand,startOTD,printFlag
 
 domainName = 'base_domain'
 configurationName = 'defaultConfig'
@@ -14,8 +14,11 @@ def setInstance():
 
 def createInstance():
     writeInstanceScript(domainName,configurationName,machineName,scriptFile)
+    printFlag('Begin Creating Instance')
     execWLSTCommand(scriptFile)
+    printFlag('Done Creating Instance')
     startOTD(domainName,configurationName,machineName)
+    
 
 setInstance()
 createInstance()

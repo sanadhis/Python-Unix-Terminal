@@ -1,4 +1,4 @@
-from otdModule import readConfiguration,writeConfigurationScript,execWLSTCommand
+from otdModule import readConfiguration,writeConfigurationScript,execWLSTCommand,printFlag
 
 domainName = 'base_domain'
 configurationName = 'defaultConfig'
@@ -18,7 +18,9 @@ def setConfiguration():
 
 def createConfiguration():
     writeConfigurationScript(domainName,configurationName,listenerPort,serverName,originServer,scriptFile)
+    printFlag('Begin Creating Configuration')
     execWLSTCommand(scriptFile)
+    printFlag('Done Creating Configuration')
 
 setConfiguration()
 createConfiguration()

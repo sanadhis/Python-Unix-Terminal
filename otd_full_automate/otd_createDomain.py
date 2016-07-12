@@ -1,4 +1,4 @@
-from otdModule import readConfiguration,writeCreateDomainScript,execWLSTCommand
+from otdModule import readConfiguration,writeCreateDomainScript,execWLSTCommand,printFlag
 
 domainName = 'base_domain'
 username = 'weblogic'
@@ -14,7 +14,9 @@ def setDomain():
 
 def createDomain():
     writeCreateDomainScript(domainName,username,password)
+    printFlag('Begin Creating Domain')
     execWLSTCommand(scriptFile)
+    printFlag('Done Creating Domain')
 
 setDomain()
 createDomain()
