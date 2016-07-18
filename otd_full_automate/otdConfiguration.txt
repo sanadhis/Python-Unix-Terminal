@@ -1,4 +1,4 @@
-securityUpdate n
+securityUpdate y
 type c
 username weblogic
 password otd123otd
