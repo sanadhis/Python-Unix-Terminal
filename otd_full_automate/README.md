@@ -21,6 +21,16 @@ Usage
 ------------
 Perform $python #filename.py#
 
+- To install OTD : otd_installationSetUp.py
+- To create a Domain : otd_createDomain.py
+- To create a configuration : otd_createConfiguration.py
+- To register a machine : otd_createMachine.py
+- To create an instance : otd_createInstance.py
+- Function modules (contains all the functions) : otdModule.py
+- Saved configuration : otdConfiguration.py
+- File to save WLST commands and being executed by WLST runtime : otd_wlstScript.py
+- RPM's spec file for Standalone installation : rpm/otd-python.spec
+
 ## History
 
 July 2016
