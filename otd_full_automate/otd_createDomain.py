@@ -16,10 +16,10 @@ password = 'otd123otd'
 scriptFile = "otd_wlstScript.py"
 
 def setDomain():
-	"""This method gather and set the required params for creating a domain 
-
-        Returns:
-            null.
+    """This method gather and set the required params for creating a domain 
+    
+           Returns:
+           null.
     """
     global domainName, configurationName, listenerPort, serverName, originServer
     savedConfiguration = readConfiguration()
@@ -28,10 +28,10 @@ def setDomain():
     password = savedConfiguration['password']
 
 def createDomain():
-	"""This method execute the process of creating a domain 
+    """This method execute the process of creating a domain 
 
-        Returns:
-            null.
+           Returns:
+           null.
     """
     writeCreateDomainScript(domainName,username,password)
     printFlag('Begin Creating Domain')

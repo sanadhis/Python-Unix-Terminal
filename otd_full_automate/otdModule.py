@@ -3,6 +3,8 @@ import os
 import sys
 
 """This module contains the required functions/methods to install, set, and configuring OTD.
+    The installation method install both Standalone and Collocated OTD
+    The methods :writeCreateDomainScript, writeConfigurationScript, writeCreateMachineScript, and writeInstanceScript are used only for Collocated OTD
 
     Author:
         I Made Sanadhi Sutandi (Openlab Summer Student 2016)
@@ -33,7 +35,11 @@ def buildInstallCommand(updateOption,otdType):
         Returns:
             string: the linux shell installation command for OTD
     """
-    return "./otd_linux64.bin -silent ORACLE_HOME=" + getOraclePath() + " DECLINE_SECURITY_UPDATES="+ updateOption +" INSTALL_TYPE=" + otdType
+    installString = "./otd_linux64.bin -silent ORACLE_HOME=" + getOraclePath() + " DECLINE_SECURITY_UPDATES="+ updateOption +" INSTALL_TYPE=" + otdType
+    if otdType == 'Collocated OTD (Managed through WebLogic server)':
+        return installString
+    else:
+        return installString + " MYORACLESUPPORT_USERNAME=xx.yy.zz@cern.ch SECURITY_UPDATES_VIA_MYORACLESUPPORT=false"
 
 def execProgram(filePath):
     """execProgram function, is used to execute a file in specific path
@@ -267,7 +273,7 @@ def writeConfigurationScript(domainName,configurationName,listenerPort,serverNam
     writeWLSTScript(scriptText,scriptFile)
 
 def writeCreateDomainScript(domainName,username,password):
-    """writeCreateDomainScript function, is used to write the required WLST command for creating a domain
+    """writeCreateDomainScript function, is used to write the required WLST command for creating a Collocated domain
 
         the WLST commands are being stored in a long string variable : scriptText,
         then they are being written into a script file to be executed later using WLST runtime
@@ -280,10 +286,29 @@ def writeCreateDomainScript(domainName,username,password):
         Returns:
             null
     """
-    templatePath = getTemplatePath('otd_domainTemplate.jar')
+    #applies if the otd template path is exists
+    #templatePath = getTemplatePath('otd_domainTemplate.jar')
+    #domainPath = getDomainPath(domainName)
+    #props = [templatePath,domainPath,username,password]
+    #scriptText = "createDomain('" + "','".join(props) + "')"
+
+    defaultListenAddress = "localhost"
+    defaultListenPort = "7001"
     domainPath = getDomainPath(domainName)
-    props = [templatePath,domainPath,username,password]
-    scriptText = "createDomain('" + "','".join(props) + "')"
+
+    scriptText = "selectTemplate('Oracle Traffic Director - Restricted JRF')\n"
+    scriptText += "loadTemplates()\n"
+    scriptText += "cd('Servers/AdminServer')\n"
+    scriptText += "set('ListenAddress','"+defaultListenAddress+"')\n"
+    scriptText += "set('ListenPort',"+defaultListenPort+")\n"
+    scriptText += "cd('/')\n"
+    scriptText += "cd('Security/base_domain/User/"+username+"')\n"
+    scriptText += "cmo.setPassword('"+password+"')\n"
+    scriptText += "setOption('OverwriteDomain','true')\n"
+    scriptText += "writeDomain('"+domainPath+"')\n"
+    scriptText += "closeTemplate()\n"
+    scriptText += "exit('y')\n"
+    
     writeWLSTScript(scriptText,'otd_wlstScript.py')
 
 def writeCreateMachineScript(serverUser,serverPass,serverAdmURL,machineName,machineAddress,machinePort):
